@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIDEO DOWNLOADER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form id="downloadForm">
+        <header class="header">
+            <div class="title">
+                <p>Download Any Social Media Post from here..!</p>
+            </div>
+            <div class="header-right">
+                <a class="about" href="">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="INSTA VIDEOS DOWNLOAD">
+                </div>
+                <div>
+                    <label for="url">Give Your URL</label><br>
+                    <input type="text" id="url" name="url" placeholder="Paste your URL Here..">
+                </div>
+                <br>
+                <button class="button" type="submit">Download →</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the form data
+            const formData = new FormData(event.target);
+
+            try {
+                // Send the link to the server
+                const response = await fetch('http://127.0.0.1:8000/download_channel', { // Replace with your FastAPI server URL
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Response:', result);
+                    // Handle the result here (e.g., show download link, success message)
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+
+</html>
